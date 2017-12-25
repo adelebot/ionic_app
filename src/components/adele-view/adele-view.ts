@@ -13,6 +13,8 @@ export class AdeleViewComponent {
   }
 
   ngAfterViewInit(){
+    this.adeleCanvas.nativeElement.width  = window.innerWidth;
+    this.adeleCanvas.nativeElement.height = window.innerHeight;
     let hammer = new window['Hammer'](this.adeleCanvas.nativeElement);
     hammer.get('pan').set({ direction: window['Hammer'].DIRECTION_ALL });
     hammer.on('pan', (ev) => {
