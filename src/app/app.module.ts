@@ -4,11 +4,15 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { AdeleViewComponent} from '../components/adele-view/adele-view';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
 @NgModule({
   declarations: [
+    AdeleViewComponent,
+
     MyApp,
     HomePage
   ],
