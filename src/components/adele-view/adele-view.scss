@@ -1,3 +1,7 @@
-adele-view {
-    background-color: #1abc9c;
+AdeleView {
+    .fondo{ // fondo de papel
+        margin-top: -10px;
+        background: url("/assets/adele/paper.jpg") top left no-repeat;
+        background-size: 100% 100%;
+    }
 }
