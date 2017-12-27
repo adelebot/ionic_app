@@ -12,7 +12,8 @@ export class Comando{
     constructor(
         private contexto:CanvasRenderingContext2D,
         private comando:string,
-        private imagenSrc:string
+        private imagenSrc:string,
+        private dibujarAlCargar:boolean=false
     ){
         this.esDibujable = false;
         this.tamX = this.tamY = null;
@@ -23,6 +24,9 @@ export class Comando{
             if(this.tamY===null){
                 this.tamX = this.imagen.width;
                 this.tamY = this.imagen.height; 
+            }
+            if(dibujarAlCargar){
+                this.dibujar();
             }
         }
         this.imagen.src = this.imagenSrc;
