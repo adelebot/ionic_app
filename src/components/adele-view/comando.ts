@@ -25,7 +25,7 @@ export class Comando{
                 this.tamX = this.imagen.width;
                 this.tamY = this.imagen.height; 
             }
-            if(dibujarAlCargar){
+            if(this.dibujarAlCargar){
                 this.dibujar();
             }
         }
@@ -63,14 +63,22 @@ export class Comando{
     public estaDentro(coordenadas:[number,number]):boolean{
         let esta:boolean = false;
         if(
-            coordenadas[0] > this.posX && 
-            coordenadas[0]< (this.posX+this.tamX) && 
-            coordenadas[1] > this.posY && 
-            coordenadas[1] < (this.posY+this.tamY))
+            coordenadas[0] >= (this.posX-(this.tamX/2)) && 
+            coordenadas[0]<= (this.posX+(this.tamX/2)) && 
+            coordenadas[1] >= this.posY-(this.tamY/2) && 
+            coordenadas[1] <= (this.posY+(this.tamY/2)))
             {
                 esta = true;
         }
         return esta;
+    }
+
+
+    public clone():Comando{
+        let target:Comando = new Comando(this.contexto,this.comando,this.imagenSrc,this.dibujarAlCargar);
+        target.setPosicion(this.getPosicion());
+        target.setTamanio(this.getTamanio());
+        return target;
     }
 
 }
