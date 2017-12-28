@@ -40,7 +40,9 @@ export class AdeleViewComponent {
     window.onresize = (e) =>{
         //ngZone.run will help to run change detection
         this.ngZone.run(() => {
-            this.init();
+          this.adeleCanvas.nativeElement.width  = window.innerWidth;
+          this.adeleCanvas.nativeElement.height = window.innerHeight;
+          this.redibujar(this.adeleCanvas.nativeElement.getContext('2d'));
         });
     };
   }
@@ -49,12 +51,6 @@ export class AdeleViewComponent {
    * Wraper de on ready
    */
   ngAfterViewInit(){
-    this.init();
-  }
-  /**
-   * Funcion para inicializar todo el componente
-   */
-  private init():void{
     let ctx = this.adeleCanvas.nativeElement.getContext('2d');
     this.configCanvas(ctx);
     this.initComandos(ctx);
@@ -142,7 +138,7 @@ export class AdeleViewComponent {
     
     this.erase = new Comando(ctx,"erase","assets/adele/erase.png",true);
     this.erase.setTamanio([tamanio,tamanio]);
-    this.erase.setPosicion([window.innerWidth-(tamanio+10),window.innerHeight-(tamanio)]);
+    this.erase.setPosicion([window.innerWidth-(tamanio+5),window.innerHeight-(tamanio)]);
     
     this.aPos = width*0.1;
 
@@ -193,8 +189,8 @@ export class AdeleViewComponent {
         let k:number = (i%2==0) ? -1 : 2;
         k = k*p1[1];
         ctx.quadraticCurveTo(
-          (p0[0]+p1[0])/2,
-          (p0[1]+k)/2,
+          Math.floor((p0[0]+p1[0])/2),
+          Math.floor((p0[1]+k)/2),
           p1[0],
           p1[1]
         );

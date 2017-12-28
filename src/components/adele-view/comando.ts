@@ -53,8 +53,8 @@ export class Comando{
      * @param pos par ordenado con la nueva posicion del objeto
      */
     public setPosicion(pos:[number,number]):void{
-        this.posX = pos[0];
-        this.posY = pos[1];
+        this.posX = Math.floor(pos[0]);
+        this.posY = Math.floor(pos[1]);
     }
 
     /**
@@ -70,8 +70,8 @@ export class Comando{
      * @param tamanio par ordenado con las dimenciones del objeto (ancho,alto)
      */
     public setTamanio(tamanio:[number,number]):void{
-        this.tamX = tamanio[0];
-        this.tamY = tamanio[1];
+        this.tamX = Math.floor(tamanio[0]);
+        this.tamY = Math.floor(tamanio[1]);
     }
 
     /**
