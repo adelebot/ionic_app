@@ -11,4 +11,13 @@ export class HomePage {
 
   }
 
+  public onPlay(data):void{
+    console.log(data);
+  }
+
+  public onConfig():void{
+    //TODO Open cofig screen
+    console.log("onConfig");
+  }
+
 }
