@@ -4,8 +4,9 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Pro } from '@ionic/pro';
+
 import { AdeleViewComponent} from '../components/adele-view/adele-view';
 
 import { MyApp } from './app.component';
@@ -53,6 +54,7 @@ export class MyErrorHandler implements ErrorHandler {
     HomePage
   ],
   providers: [
+    ScreenOrientation,
     StatusBar,
     SplashScreen,
     IonicErrorHandler,
