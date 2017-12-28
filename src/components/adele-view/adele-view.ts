@@ -22,7 +22,7 @@ export class AdeleViewComponent {
     this.programa = new Array<Comando>();
   }
 
-  ngAfterViewInit(){
+    ngAfterViewInit(){
     let ctx = this.adeleCanvas.nativeElement.getContext('2d');
     
     this.configCanvas(ctx);
@@ -31,19 +31,30 @@ export class AdeleViewComponent {
     
   }
 
-  configCanvas(ctx:CanvasRenderingContext2D):void {
+  private configCanvas(ctx:CanvasRenderingContext2D):void {
     this.adeleCanvas.nativeElement.width  = window.innerWidth;
     this.adeleCanvas.nativeElement.height = window.innerHeight;
     
     let c:Comando = null;
     let hammer = new window['Hammer'](this.adeleCanvas.nativeElement);
     
+    hammer.on('tap',(ev)=>{
+      let x = ev.pointers[0].clientX;
+      let y = ev.pointers[0].clientY;
+      if(this.erase.estaDentro([x,y])){
+        this.programa.pop();
+        this.redibujar(ctx);
+      }
+      if(this.play.estaDentro([x,y])){
+        //TODO play
+      }
+    });
+
     hammer.get('pan').set({ direction: window['Hammer'].DIRECTION_ALL });
     hammer.on('panstart',(ev)=>{
       let x = ev.pointers[0].clientX;
       let y = ev.pointers[0].clientY;
       console.info("Inicialdo toque",x,y);
-
       for (let i=0;i<this.comandos.length && c==null;++i) {
         if(this.comandos[i].estaDentro([x,y])){
           c = this.comandos[i].clone();
@@ -57,38 +68,11 @@ export class AdeleViewComponent {
       }
     });
     hammer.on('pan', (ev) => {
-
       let x = ev.pointers[0].clientX;
       let y = ev.pointers[0].clientY;
-      
       if(c!=null){
-        ctx.clearRect(0, 0, this.adeleCanvas.nativeElement.width, this.adeleCanvas.nativeElement.height);
         c.setPosicion([x,y]);
-        this.logo.dibujar();
-        for (let i=0;i<this.comandos.length;++i) {
-          this.comandos[i].dibujar();
-        }
-        for (let i=0;i<this.programa.length;++i) {
-          this.programa[i].dibujar();
-          if(i<(this.programa.length-1)){
-            let p0 = this.programa[i].getPosicion();
-            let p1 = this.programa[i+1].getPosicion();
-            ctx.fillStyle = "black";
-            ctx.beginPath();
-            ctx.moveTo(p0[0],p0[1]);
-            
-            let k:number = (i%2==0) ? -1 : 2;
-            k = k*p1[1];
-            console.log(i,k);
-            ctx.quadraticCurveTo(
-              (p0[0]+p1[0])/2,
-              (p0[1]+k)/2,
-              p1[0],
-              p1[1]
-            );
-            ctx.stroke();
-          }
-        }
+        this.redibujar(ctx);
       }
       if(ev.isFinal){
         console.info("Terminando toque: ",x,y);
@@ -97,7 +81,7 @@ export class AdeleViewComponent {
     });
   }
 
-  initComandos(ctx:CanvasRenderingContext2D):void {
+  private initComandos(ctx:CanvasRenderingContext2D):void {
     this.logo = new Comando(ctx,"","assets/adele/adeleLogo.png",true);
     this.logo.setPosicion([55,window.innerHeight-20]);
     
@@ -152,6 +136,36 @@ export class AdeleViewComponent {
     temp.setPosicion([420,30]);
     this.comandos.push(temp);
 
+  }
+
+  private redibujar(ctx:CanvasRenderingContext2D):void{
+    ctx.clearRect(0, 0, this.adeleCanvas.nativeElement.width, this.adeleCanvas.nativeElement.height);
+    this.logo.dibujar();
+    for (let i=0;i<this.comandos.length;++i) {
+      this.comandos[i].dibujar();
+    }
+    for (let i=0;i<this.programa.length;++i) {
+      this.programa[i].dibujar();
+      if(i<(this.programa.length-1)){
+        let p0 = this.programa[i].getPosicion();
+        let p1 = this.programa[i+1].getPosicion();
+        ctx.fillStyle = "black";
+        ctx.beginPath();
+        ctx.moveTo(p0[0],p0[1]);
+        
+        let k:number = (i%2==0) ? -1 : 2;
+        k = k*p1[1];
+        ctx.quadraticCurveTo(
+          (p0[0]+p1[0])/2,
+          (p0[1]+k)/2,
+          p1[0],
+          p1[1]
+        );
+        ctx.stroke();
+      }
+    }
+    this.play.dibujar();
+    this.erase.dibujar();
   }
 
 }
