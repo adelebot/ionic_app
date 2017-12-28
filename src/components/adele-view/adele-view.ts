@@ -24,11 +24,8 @@ export class AdeleViewComponent {
 
     ngAfterViewInit(){
     let ctx = this.adeleCanvas.nativeElement.getContext('2d');
-    
     this.configCanvas(ctx);
-
     this.initComandos(ctx);
-    
   }
 
   private configCanvas(ctx:CanvasRenderingContext2D):void {
@@ -41,6 +38,7 @@ export class AdeleViewComponent {
     hammer.on('tap',(ev)=>{
       let x = ev.pointers[0].clientX;
       let y = ev.pointers[0].clientY;
+      console.info("Toque en: ",x,y);
       if(this.erase.estaDentro([x,y])){
         this.programa.pop();
         this.redibujar(ctx);
@@ -48,13 +46,16 @@ export class AdeleViewComponent {
       if(this.play.estaDentro([x,y])){
         //TODO play
       }
+      if(this.logo.estaDentro([x,y])){
+        //TODO config
+      }
     });
 
     hammer.get('pan').set({ direction: window['Hammer'].DIRECTION_ALL });
     hammer.on('panstart',(ev)=>{
       let x = ev.pointers[0].clientX;
       let y = ev.pointers[0].clientY;
-      console.info("Inicialdo toque",x,y);
+      console.info("Iniciando drag: ",x,y);
       for (let i=0;i<this.comandos.length && c==null;++i) {
         if(this.comandos[i].estaDentro([x,y])){
           c = this.comandos[i].clone();
@@ -75,7 +76,7 @@ export class AdeleViewComponent {
         this.redibujar(ctx);
       }
       if(ev.isFinal){
-        console.info("Terminando toque: ",x,y);
+        console.info("Terminando drag: ",x,y);
         c=null;
       }
     });
