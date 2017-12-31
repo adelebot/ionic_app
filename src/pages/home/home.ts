@@ -10,6 +10,10 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 export class HomePage {
 
   constructor(public navCtrl: NavController,private screenOrientation: ScreenOrientation) {
+    
+  }
+
+  ngAfterViewInit(){
     console.info("Orientacion actual: ",this.screenOrientation.type); 
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
     .then(
@@ -18,7 +22,7 @@ export class HomePage {
       }
     ).catch(
       (err)=>{
-        console.error("No se puede cambio la orientacion",err);
+        console.error("No se puede cambio la orientacion",JSON.stringify(err));
       }
     );
   }
