@@ -18,6 +18,9 @@ export class Comando{
     // Alto del objeto
     private tamY:number;
 
+    // Numero del objeto
+    private label:string;
+
     /**
      * Constructor de la clase
      * @param contexto contexto 2D del canvas usado
@@ -33,6 +36,7 @@ export class Comando{
     ){
         this.esDibujable = false;
         this.tamX = this.tamY = null;
+        this.label = null;
 
         this.imagen = new Image();
         this.imagen.onload = ()=>{
@@ -82,6 +86,10 @@ export class Comando{
         return [this.tamX,this.tamY];
     }
 
+    public setLabel(label:string){
+        this.label = label;
+    }
+
     /**
      * Funcion para obtener el comando asignado al objeto
      * @returns nombre del comando
@@ -96,6 +104,10 @@ export class Comando{
     public dibujar():void{
         if(this.esDibujable){
             this.contexto.drawImage(this.imagen,this.posX-(this.tamX/2),this.posY-(this.tamY/2),this.tamX,this.tamY);
+            if(this.label!==null){
+                this.contexto.font="25px serif";
+                this.contexto.fillText(this.label,this.posX-(this.tamX/2),this.posY-(this.tamY/3));
+            }
         }
     }
 

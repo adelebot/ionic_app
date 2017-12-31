@@ -115,6 +115,7 @@ export class AdeleViewComponent {
       for (let i = 0; i < this.comandos.length && c == null; ++i) {
         if (this.comandos[i].estaDentro([x, y])) {
           c = this.comandos[i].clone();
+          c.setLabel(this.programa.length.toString());
           this.programa.push(c);
         }
       }
