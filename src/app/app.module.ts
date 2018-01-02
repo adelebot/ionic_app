@@ -11,6 +11,7 @@ import { AdeleViewComponent} from '../components/adele-view/adele-view';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { ConfigPage } from '../pages/config/config'; 
 
 const IonicPro = Pro.init('e349b7cb', {
   appVersion: "0.0.1"
@@ -42,7 +43,8 @@ export class MyErrorHandler implements ErrorHandler {
     AdeleViewComponent,
 
     MyApp,
-    HomePage
+    HomePage,
+    ConfigPage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,8 @@ export class MyErrorHandler implements ErrorHandler {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    ConfigPage
   ],
   providers: [
     ScreenOrientation,
