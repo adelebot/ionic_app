@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import { ConfigPage } from '../config/config';
 
 @Component({
   selector: 'page-home',
@@ -11,7 +12,6 @@ export class HomePage {
   constructor(
     public navCtrl: NavController
   ) {
-    
   }
 
   public onPlay(data):void{
@@ -19,8 +19,7 @@ export class HomePage {
   }
 
   public onConfig():void{
-    //TODO Open cofig screen
-    console.log("onConfig");
+    this.navCtrl.push(ConfigPage);
   }
 
 }
