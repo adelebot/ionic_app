@@ -92,4 +92,5 @@
         <variable name="UPDATE_METHOD" value="background" />
         <variable name="MAX_STORE" value="2" />
     </plugin>
+    <plugin name="cordova-plugin-bluetooth-serial" spec="^0.4.7" />
 </widget>
