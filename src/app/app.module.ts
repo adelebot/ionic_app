@@ -6,12 +6,14 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Pro } from '@ionic/pro';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 import { AdeleViewComponent} from '../components/adele-view/adele-view';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ConfigPage } from '../pages/config/config'; 
+import { ConfigPage } from '../pages/config/config';
+import { ComunicacionProvider } from '../providers/comunicacion/comunicacion'; 
 
 const IonicPro = Pro.init('e349b7cb', {
   appVersion: "0.0.1"
@@ -61,7 +63,9 @@ export class MyErrorHandler implements ErrorHandler {
     StatusBar,
     SplashScreen,
     IonicErrorHandler,
-    {provide: ErrorHandler, useClass: MyErrorHandler}
+    {provide: ErrorHandler, useClass: MyErrorHandler},
+    BluetoothSerial,
+    ComunicacionProvider
   ]
 })
 export class AppModule {}
