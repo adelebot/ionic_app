@@ -45,19 +45,26 @@ export class AdeleViewComponent {
     this.screenOrientation.onChange().subscribe(ev=>{
       this.ngZone.run(() => {
         let ctx = this.adeleCanvas.nativeElement.getContext('2d');
-        let width = window.innerWidth;
-        let height = window.innerHeight;
+        let width = window.innerHeight;
+        let height = window.innerWidth;
 
-        this.adeleCanvas.nativeElement.width = height;
-        this.adeleCanvas.nativeElement.height = width;
+        let oldWidth = this.adeleCanvas.nativeElement.width;
+        let oldHeight = this.adeleCanvas.nativeElement.height;
+
+        this.adeleCanvas.nativeElement.width = width;
+        this.adeleCanvas.nativeElement.height = height;
 
         this.aPos = width * 0.1;
         this.comandos=[];
         this.initComandos(ctx);
 
         for(let i=0;i<this.programa.length;++i){
-          let tamanio = height * 0.05;// 5% del ancho para el tamanio de los comandos
+          let tamanio = width * 0.05;// 5% del ancho para el tamanio de los comandos
           this.programa[i].setTamanio([tamanio, tamanio]);
+          let pos = this.programa[i].getPosicion();
+          pos[0] = pos[0]*width/oldWidth;
+          pos[1] = pos[1]*height/oldHeight;
+          this.programa[i].setPosicion(pos);
         }
 
         this.redibujar(ctx);
