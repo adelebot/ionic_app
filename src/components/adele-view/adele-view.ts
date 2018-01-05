@@ -172,14 +172,14 @@ export class AdeleViewComponent {
     this.aPos = width * 0.1;
 
     //Comandos de adele
-    this.addComando(new Comando(ctx, "u", "assets/adele/arrowU.png", true));
-    this.addComando(new Comando(ctx, "d", "assets/adele/arrowD.png", true));
-    this.addComando(new Comando(ctx, "l", "assets/adele/arrowL.png", true));
-    this.addComando(new Comando(ctx, "r", "assets/adele/arrowR.png", true));
-    this.addComando(new Comando(ctx, "c", "assets/adele/clawC.png", true));
-    this.addComando(new Comando(ctx, "o", "assets/adele/clawO.png", true));
-    this.addComando(new Comando(ctx, "q", "assets/adele/color.png", true));
-    this.addComando(new Comando(ctx, "m", "assets/adele/note.png", true));
+    this.addComando(new Comando(ctx, "U", "assets/adele/arrowU.png", true));
+    this.addComando(new Comando(ctx, "D", "assets/adele/arrowD.png", true));
+    this.addComando(new Comando(ctx, "L", "assets/adele/arrowL.png", true));
+    this.addComando(new Comando(ctx, "R", "assets/adele/arrowR.png", true));
+    this.addComando(new Comando(ctx, "C", "assets/adele/clawC.png", true));
+    this.addComando(new Comando(ctx, "O", "assets/adele/clawO.png", true));
+    this.addComando(new Comando(ctx, "P", "assets/adele/color.png", true));
+    this.addComando(new Comando(ctx, "N", "assets/adele/note.png", true));
 
 
   }
