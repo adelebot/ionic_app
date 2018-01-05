@@ -1,5 +1,5 @@
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-import { Injectable } from '@angular/core';
+import { Injectable,NgZone } from '@angular/core';
 
 @Injectable()
 export class ComunicacionProvider {
@@ -7,23 +7,52 @@ export class ComunicacionProvider {
 
   public bonded: Array<any> = [];
   public unBonded: Array<any> = [];
+
   public isEnable:boolean = false;
+  public isConnected:boolean = false;
   public searching:boolean = false;
 
-  constructor(private bluetooth:BluetoothSerial) {
+  constructor(
+    private bluetooth:BluetoothSerial,
+    private zone:NgZone
+  ) {
     this.bluetooth.isEnabled().then(
       ()=>{
-        this.isEnable = true; 
+        this.zone.run(()=>{
+          this.isEnable = true; 
+        });
         this.findBonded();
+        this.bluetooth.isConnected().then((data)=>{
+          this.isConnected = true;
+          this.subscribe();
+        }).catch((err)=>{
+          this.zone.run(()=>{
+            this.isConnected = false;
+          });
+        });
       }
     ).catch(
-      ()=>{ this.isEnable = false; }
+      ()=>{ 
+        this.zone.run(()=>{
+          this.isEnable = false;
+        }); 
+      }
     );
+  }
+
+  private subscribe():void{
+    this.bluetooth.subscribe('\n').subscribe((data)=>{
+      this.zone.run(()=>{
+        this.data+=data;
+      });
+    });
   }
 
   private findBonded():void{
     this.bluetooth.list().then((data)=>{
-      this.bonded = data;
+      this.zone.run(()=>{
+        this.bonded = data;
+      });
     }).catch((err)=>{
       console.error("No se puede listar los dipositivos vinculados",err);
     });
@@ -32,27 +61,72 @@ export class ComunicacionProvider {
   public enable():void{
     console.log("Activando");
     this.bluetooth.enable().then(()=>{
-      this.isEnable = true;
+      this.zone.run(()=>{
+        this.isEnable = true;
+      });
       this.findBonded();
+      this.bluetooth.isConnected().then((data)=>{
+        this.zone.run(()=>{
+          this.isConnected = true;
+        });
+        this.subscribe();
+      }).catch((err)=>{
+        this.zone.run(()=>{
+          this.isConnected = false;
+        });
+      });
     }).catch((err)=>{
-      this.isEnable = false;
+      this.zone.run(()=>{
+        this.isEnable = false;
+      });
       console.error("No se puede activar el bluetooth,",err);
     });
   }
 
-  public find():Promise<boolean>{
-    return new Promise<boolean>((success,reject)=>{
+  public findUnBonded():Promise<void>{
+    return this.find();
+  }
+
+  public find():Promise<void>{
+    return new Promise<void>((success,reject)=>{
       this.bluetooth.discoverUnpaired().then(
         (data)=>{
-          this.unBonded = data;
-          success(true);
+          this.zone.run(()=>{
+            this.unBonded = data;
+          });
+          success();
         }
       ).catch(
         (err)=>{
           console.error("No se puede buscar dispositivos no pareados, ",err);
-          success(false);
+          reject();
         }
       );
+    });
+  }
+
+  public connect(dispositivo:any):Promise<void>{
+    return new Promise((success,reject)=>{
+      this.bluetooth.connect(dispositivo.id).subscribe((data)=>{
+        if(data=="OK"){
+          this.zone.run(()=>{
+            this.isConnected = true;
+          });
+          success();
+        }else{
+          console.error("Se a desconectado del dispositivo, ",data);
+          this.zone.run(()=>{
+            this.isConnected = false;
+          });
+          reject();
+        }
+      },(err)=>{
+        console.error("No se a podido conectar del dispositivo, ",err);
+        this.zone.run(()=>{
+          this.isConnected = false;
+        });
+        reject();
+      });
     });
   }
 
@@ -67,5 +141,18 @@ export class ComunicacionProvider {
 
   public write(data:string):Promise<boolean>{
     return this.bluetooth.write(data);
+  }
+
+  public disconnect():Promise<void>{
+    return new Promise<void>((success,reject)=>{
+      this.bluetooth.disconnect().then(()=>{
+        this.zone.run(()=>{
+          this.isConnected = false;
+        });
+        success();
+      }).catch((err)=>{
+        reject();
+      });
+    });
   }
 }
