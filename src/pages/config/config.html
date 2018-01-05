@@ -2,10 +2,53 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        1 of 3
+        <h2>Configuracion de comunicacion</h2>
+        <button 
+          ion-button 
+          [hidden]="comunicacion.isEnable" 
+          block  
+          color="light" 
+          (click)="activar();">
+            Activar Bluetooth
+        </button>
+        <button 
+          ion-button 
+          [hidden]="!comunicacion.isEnable" 
+          block  
+          color="light" 
+          (click)="buscar();">
+            Buscar dispositivos
+        </button>
+        <ion-scroll scrollY="true" direction="xy" overflow-scroll="true">
+          <ion-list>
+            <ion-item-divider [hidden]="comunicacion.bonded.length==0">
+              Dispositivos registrados
+            </ion-item-divider>
+            <ion-item *ngFor="let dispositivo of comunicacion.bonded;" (click)="conectar(dispositivo);">
+              <h4>{{dispositivo.name}}</h4>
+              <p>{{dispositivo.id}} - {{dispositivo.class}}</p>
+            </ion-item>
+            <ion-item-divider [hidden]="comunicacion.unBonded.length==0">
+              Dispositivos nuevos
+            </ion-item-divider>
+            <ion-item *ngFor="let dispositivo of comunicacion.unBonded;" (click)="conectar(dispositivo);">
+              <h4>{{dispositivo.name}}</h4>
+              <p>{{dispositivo.id}} - {{dispositivo.class}}</p>
+            </ion-item>
+          </ion-list>
+        </ion-scroll>
       </ion-col>
-      <ion-col col-2>
-        2 of 3 (wider)
+      <ion-col col-4>
+        <h4>AdeleBot</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <button 
+          ion-button block color="danger"
+          [hidden]="!comunicacion.isConnected" 
+          (click)="desconectar()">
+            Desconectar
+        </button>
+        <br/>
+        <button ion-button block primary (click)="regresar()">Regresar</button>
       </ion-col>
     </ion-row>
   </ion-grid>
