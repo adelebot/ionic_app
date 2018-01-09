@@ -15,15 +15,13 @@ export class ConfigPage {
   ) {
   }
 
-  private activar():void{
-    this.comunicacion.enable();
-  }
-
   private buscar():void{
     let animacion = this.loadingCtrl.create({
       content: 'Buscando nuevos dispositivos'
     });
     animacion.present();
+    
+    this.comunicacion.enable();
     this.comunicacion.find().then(()=>{
       animacion.dismiss();
     }).catch(()=>{
