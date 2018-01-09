@@ -44,6 +44,18 @@ export class Comando{
             if(this.tamY===null){
                 this.tamX = this.imagen.width;
                 this.tamY = this.imagen.height; 
+            }else{
+                let px = this.imagen.width/this.tamX;
+                let py = this.imagen.height/this.tamY;
+                if(px>py){
+                    let p = this.tamX/this.imagen.width;
+                    this.tamX = Math.floor(this.imagen.width*p);
+                    this.tamY = Math.floor(this.imagen.height*p);
+                }else{
+                    let p = this.tamY/this.imagen.height;
+                    this.tamX = Math.floor(this.imagen.width*p);
+                    this.tamY = Math.floor(this.imagen.height*p);
+                }
             }
             if(this.dibujarAlCargar){
                 this.dibujar();
@@ -74,8 +86,21 @@ export class Comando{
      * @param tamanio par ordenado con las dimenciones del objeto (ancho,alto)
      */
     public setTamanio(tamanio:[number,number]):void{
-        this.tamX = Math.floor(tamanio[0]);
-        this.tamY = Math.floor(tamanio[1]);
+        if(this.tamX===null){
+            this.tamX = Math.floor(tamanio[0]);
+            this.tamY = Math.floor(tamanio[1]);
+        }else{
+            let px = this.tamX/tamanio[0];
+            let py = this.tamY/tamanio[1];
+            let p = 0;
+            if(px>py){
+                p = tamanio[0]/this.tamX;
+            }else{
+                p = tamanio[1]/this.tamY;
+            }
+            this.tamX = Math.floor(this.tamX*p);
+            this.tamY = Math.floor(this.tamY*p);
+        }
     }
 
     /**
@@ -106,7 +131,7 @@ export class Comando{
             this.contexto.drawImage(this.imagen,this.posX-(this.tamX/2),this.posY-(this.tamY/2),this.tamX,this.tamY);
             if(this.label!==null){
                 this.contexto.font="25px serif";
-                this.contexto.fillText(this.label,this.posX-(this.tamX/2),this.posY-(this.tamY/3));
+                this.contexto.fillText(this.label,this.posX-(this.tamX/1.),this.posY-(this.tamY/3));
             }
         }
     }
