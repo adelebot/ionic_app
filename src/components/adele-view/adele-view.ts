@@ -161,25 +161,25 @@ export class AdeleViewComponent {
     this.logo = new Comando(ctx, "config", "assets/adele/adeleLogo.png", true);
     this.logo.setPosicion([tamanio + 50, height - (tamanio+10)]);
 
-    this.play = new Comando(ctx, "play", "assets/adele/play.png", true);
+    this.play = new Comando(ctx, "play", "assets/adele/adele_icons-09.svg", true);
     this.play.setTamanio([tamanio, tamanio]);
     this.play.setPosicion([width - (tamanio + 10), tamanio+10]);
 
-    this.erase = new Comando(ctx, "erase", "assets/adele/erase.png", true);
+    this.erase = new Comando(ctx, "erase", "assets/adele/adele_icons-10.svg", true);
     this.erase.setTamanio([tamanio, tamanio]);
     this.erase.setPosicion([width - (tamanio + 5), height - (tamanio+10)]);
 
     this.aPos = width * 0.1;
 
     //Comandos de adele
-    this.addComando(new Comando(ctx, "U", "assets/adele/arrowU.png", true));
-    this.addComando(new Comando(ctx, "D", "assets/adele/arrowD.png", true));
-    this.addComando(new Comando(ctx, "L", "assets/adele/arrowL.png", true));
-    this.addComando(new Comando(ctx, "R", "assets/adele/arrowR.png", true));
-    this.addComando(new Comando(ctx, "C", "assets/adele/clawC.png", true));
-    this.addComando(new Comando(ctx, "O", "assets/adele/clawO.png", true));
-    this.addComando(new Comando(ctx, "P", "assets/adele/color.png", true));
-    this.addComando(new Comando(ctx, "N", "assets/adele/note.png", true));
+    this.addComando(new Comando(ctx, "U", "assets/adele/adele_icons-04.svg", true));
+    this.addComando(new Comando(ctx, "D", "assets/adele/adele_icons-03.svg", true));
+    this.addComando(new Comando(ctx, "L", "assets/adele/adele_icons-01.svg", true));
+    this.addComando(new Comando(ctx, "R", "assets/adele/adele_icons-02.svg", true));
+    this.addComando(new Comando(ctx, "C", "assets/adele/adele_icons-06.svg", true));
+    this.addComando(new Comando(ctx, "O", "assets/adele/adele_icons-05.svg", true));
+    this.addComando(new Comando(ctx, "P", "assets/adele/adele_icons-08.svg", true));
+    this.addComando(new Comando(ctx, "N", "assets/adele/adele_icons-07.svg", true));
 
 
   }
@@ -190,7 +190,7 @@ export class AdeleViewComponent {
   private addComando(c: Comando): void {
     let width = this.adeleCanvas.nativeElement.width;
     let space = width * 0.025;// 2.5% del ancho para espacio entre comados.
-    let tamanio = width * 0.05;// 5% del ancho para el tamanio de los comandos
+    let tamanio = width * 0.065;// 5% del ancho para el tamanio de los comandos
 
     c.setTamanio([tamanio, tamanio]);
     c.setPosicion([this.aPos, tamanio+10]);
@@ -215,14 +215,8 @@ export class AdeleViewComponent {
           ctx.beginPath();
           ctx.moveTo(p0[0], p0[1]);
 
-          let k: number = (i % 2 == 0) ? -1 : 2;
-          k = k * p1[1];
-          ctx.quadraticCurveTo(
-            Math.floor((p0[0] + p1[0]) / 2),
-            Math.floor((p0[1] + k) / 2),
-            p1[0],
-            p1[1]
-          );
+          ctx.moveTo(p0[0],p0[1]);
+          ctx.lineTo(p1[0],p1[1]);
           ctx.stroke();
         }
       }
