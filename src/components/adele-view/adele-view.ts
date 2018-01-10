@@ -3,6 +3,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { Comando } from './comando';
 
+let PROPORCION_TAMANIO = 0.065;
+let PROPORCION_CRESIMIENTO = 1.15;
 @Component({
   selector: 'AdeleView',
   templateUrl: 'adele-view.html'
@@ -59,8 +61,8 @@ export class AdeleViewComponent {
         this.initComandos(ctx);
 
         for(let i=0;i<this.programa.length;++i){
-          let tamanio = width * 0.05;// 5% del ancho para el tamanio de los comandos
-          this.programa[i].setTamanio([tamanio, tamanio]);
+          let tamanio = width * PROPORCION_TAMANIO;// 65% del ancho para el tamanio de los comandos
+          this.programa[i].setTamanio([tamanio*PROPORCION_CRESIMIENTO, tamanio*PROPORCION_CRESIMIENTO]);
           let pos = this.programa[i].getPosicion();
           pos[0] = pos[0]*width/oldWidth;
           pos[1] = pos[1]*height/oldHeight;
@@ -122,6 +124,10 @@ export class AdeleViewComponent {
       for (let i = 0; i < this.comandos.length && c == null; ++i) {
         if (this.comandos[i].estaDentro([x, y])) {
           c = this.comandos[i].clone();
+          let to = c.getTamanio();
+          to[0] = to[0]*PROPORCION_CRESIMIENTO;
+          to[1] = to[1]*PROPORCION_CRESIMIENTO;
+          c.setTamanio(to);
           c.setLabel(this.programa.length.toString());
           this.programa.push(c);
         }
@@ -154,8 +160,8 @@ export class AdeleViewComponent {
   private initComandos(ctx: CanvasRenderingContext2D): void {
     let width = this.adeleCanvas.nativeElement.width;
     let height = this.adeleCanvas.nativeElement.height;
-    let tamanio = width * 0.075;// 5% de tamanio 
-
+    let tamanio = width * PROPORCION_TAMANIO;// 5% de tamanio 
+    let space = width * 0.025;// 2.5% del ancho para espacio entre comados.
 
     //Botones de funcionamiento
     this.logo = new Comando(ctx, "config", "assets/adele/adeleLogo.png", true);
@@ -168,7 +174,12 @@ export class AdeleViewComponent {
     this.erase = new Comando(ctx, "erase", "assets/adele/adele_icons-10.svg", true);
     this.erase.setTamanio([tamanio, tamanio]);
     this.erase.setPosicion([width - (tamanio + 5), height - (tamanio+10)]);
-
+    
+    ctx.fillStyle = "black";
+    ctx.beginPath();
+    ctx.moveTo(0, tamanio+space*2.5);
+    ctx.lineTo(width,tamanio+space*2.5);
+    ctx.stroke();
     this.aPos = width * 0.1;
 
     //Comandos de adele
@@ -190,7 +201,7 @@ export class AdeleViewComponent {
   private addComando(c: Comando): void {
     let width = this.adeleCanvas.nativeElement.width;
     let space = width * 0.025;// 2.5% del ancho para espacio entre comados.
-    let tamanio = width * 0.065;// 5% del ancho para el tamanio de los comandos
+    let tamanio = width * PROPORCION_TAMANIO;// 6.5% del ancho para el tamanio de los comandos
 
     c.setTamanio([tamanio, tamanio]);
     c.setPosicion([this.aPos, tamanio+10]);
@@ -204,10 +215,17 @@ export class AdeleViewComponent {
    */
   private redibujar(ctx: CanvasRenderingContext2D): void {
       ctx.clearRect(0, 0, this.adeleCanvas.nativeElement.width, this.adeleCanvas.nativeElement.height);
+      let width = this.adeleCanvas.nativeElement.width;
+      let space = width * 0.025;// 2.5% del ancho para espacio entre comados.
+      let tamanio = width * PROPORCION_TAMANIO;// 6.5% del ancho para el tamanio de los comandos
+      ctx.fillStyle = "black";
+      ctx.beginPath();
+      ctx.moveTo(0, tamanio+space*2.5);
+      ctx.lineTo(width*2,tamanio+space*2.5);
+      ctx.stroke();
       this.logo.dibujar();
 
       for (let i = 0; i < this.programa.length; ++i) {
-        this.programa[i].dibujar();
         if (i < (this.programa.length - 1)) {
           let p0 = this.programa[i].getPosicion();
           let p1 = this.programa[i + 1].getPosicion();
@@ -219,6 +237,9 @@ export class AdeleViewComponent {
           ctx.lineTo(p1[0],p1[1]);
           ctx.stroke();
         }
+      }
+      for (let i = 0; i < this.programa.length; ++i) {
+        this.programa[i].dibujar();
       }
       for (let i = 0; i < this.comandos.length; ++i) {
         this.comandos[i].dibujar();
