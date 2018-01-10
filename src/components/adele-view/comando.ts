@@ -1,6 +1,7 @@
 /**
  * Clase dibujable para manejo
  */
+let COLOR_STROKE = "#838383";
 export class Comando{
 
     // Objeto imagen para dibujar en el canvas
@@ -130,6 +131,7 @@ export class Comando{
         if(this.esDibujable){
             this.contexto.drawImage(this.imagen,this.posX-(this.tamX/2),this.posY-(this.tamY/2),this.tamX,this.tamY);
             if(this.label!==null){
+                this.contexto.fillStyle = COLOR_STROKE;
                 this.contexto.font="25px serif";
                 this.contexto.fillText(this.label,this.posX-(this.tamX/1.),this.posY-(this.tamY/3));
             }
@@ -143,10 +145,10 @@ export class Comando{
     public estaDentro(coordenadas:[number,number]):boolean{
         let esta:boolean = false;
         if(
-            coordenadas[0] >= (this.posX-(this.tamX/2)) && 
-            coordenadas[0]<= (this.posX+(this.tamX/2)) && 
-            coordenadas[1] >= this.posY-(this.tamY/2) && 
-            coordenadas[1] <= (this.posY+(this.tamY/2)))
+            coordenadas[0] >= (this.posX-(this.tamX/1.75)) && 
+            coordenadas[0]<= (this.posX+(this.tamX/1.75)) && 
+            coordenadas[1] >= this.posY-(this.tamY/1.75) && 
+            coordenadas[1] <= (this.posY+(this.tamY/1.75)))
             {
                 esta = true;
         }

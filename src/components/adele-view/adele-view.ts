@@ -3,8 +3,9 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { Comando } from './comando';
 
-let PROPORCION_TAMANIO = 0.065;
+let PROPORCION_TAMANIO = 0.075;
 let PROPORCION_CRESIMIENTO = 1.15;
+let COLOR_STROKE = "#838383";
 @Component({
   selector: 'AdeleView',
   templateUrl: 'adele-view.html'
@@ -68,9 +69,7 @@ export class AdeleViewComponent {
           pos[1] = pos[1]*height/oldHeight;
           this.programa[i].setPosicion(pos);
         }
-
         this.redibujar(ctx);
-        
       });
       
     });
@@ -107,6 +106,7 @@ export class AdeleViewComponent {
         this.redibujar(ctx);
       }
       if (this.play.estaDentro([x, y])) {
+        this.toctoc(ctx, this.play.getPosicion());
         this.emitPlay();
       }
       if (this.logo.estaDentro([x, y])) {
@@ -128,7 +128,7 @@ export class AdeleViewComponent {
           to[0] = to[0]*PROPORCION_CRESIMIENTO;
           to[1] = to[1]*PROPORCION_CRESIMIENTO;
           c.setTamanio(to);
-          c.setLabel(this.programa.length.toString());
+          c.setLabel((this.programa.length+1).toString());
           this.programa.push(c);
         }
       }
@@ -176,7 +176,7 @@ export class AdeleViewComponent {
     this.erase.setTamanio([tamanio*1.2, tamanio*1.2]);
     this.erase.setPosicion([width - (tamanio), height - (tamanio+space)]);
     
-    ctx.fillStyle = "black";
+    ctx.strokeStyle = COLOR_STROKE;
     ctx.beginPath();
     ctx.moveTo(0, tamanio+space);
     ctx.lineTo(width,tamanio+space);
@@ -205,7 +205,7 @@ export class AdeleViewComponent {
     let tamanio = width * PROPORCION_TAMANIO;// 6.5% del ancho para el tamanio de los comandos
 
     c.setTamanio([tamanio, tamanio]);
-    c.setPosicion([this.aPos, tamanio/2]);
+    c.setPosicion([this.aPos, tamanio/1.5]);
     this.comandos.push(c);
     this.aPos = this.aPos + tamanio + space;
   }
@@ -218,8 +218,8 @@ export class AdeleViewComponent {
       ctx.clearRect(0, 0, this.adeleCanvas.nativeElement.width, this.adeleCanvas.nativeElement.height);
       let width = this.adeleCanvas.nativeElement.width;
       let space = width * 0.025;// 2.5% del ancho para espacio entre comados.
-      let tamanio = width * PROPORCION_TAMANIO;// 6.5% del ancho para el tamanio de los comandos
-      ctx.fillStyle = "black";
+      let tamanio = width ;// 6.5% del ancho para el tamanio de los comandos 
+      ctx.fillStyle = COLOR_STROKE;
       ctx.beginPath();
       ctx.moveTo(0, tamanio+space);
       ctx.lineTo(width*2,tamanio+space);
@@ -230,10 +230,8 @@ export class AdeleViewComponent {
         if (i < (this.programa.length - 1)) {
           let p0 = this.programa[i].getPosicion();
           let p1 = this.programa[i + 1].getPosicion();
-          ctx.fillStyle = "black";
+          ctx.strokeStyle = COLOR_STROKE;
           ctx.beginPath();
-          ctx.moveTo(p0[0], p0[1]);
-
           ctx.moveTo(p0[0],p0[1]);
           ctx.lineTo(p1[0],p1[1]);
           ctx.stroke();
@@ -267,6 +265,28 @@ export class AdeleViewComponent {
   private emitConfig(): void {
     console.info("Event On Config");
     this.onConfig.emit();
+  }
+
+  private a:number = 0;
+  private toctoc(ctx:CanvasRenderingContext2D, position:[number,number],show:boolean=true):void{
+    let p = this.adeleCanvas.nativeElement.width * (PROPORCION_TAMANIO*0.60);
+    ++this.a;
+    if(show){
+      ctx.fillStyle = "#00ff00";
+    }else{
+      ctx.fillStyle = "#ffffff";
+    }
+    ctx.beginPath();
+    ctx.arc(position[0],position[1],p,0,Math.PI*2,true);
+    ctx.fill();
+    this.play.dibujar();
+    if(this.a<4){
+      setTimeout(()=>{
+        this.toctoc(ctx,position,!show);
+      },250);
+    }else{
+      this.a=0;
+    }
   }
 
 }
