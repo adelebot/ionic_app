@@ -183,8 +183,8 @@ export class AdeleViewComponent {
     this.aPos = width * 0.05;
 
     //Comandos de adele
-    this.addComando(new Comando(ctx, "U", "assets/adele/adele_icons-04.svg", true));
-    this.addComando(new Comando(ctx, "D", "assets/adele/adele_icons-03.svg", true));
+    this.addComando(new Comando(ctx, "F", "assets/adele/adele_icons-04.svg", true));
+    this.addComando(new Comando(ctx, "B", "assets/adele/adele_icons-03.svg", true));
     this.addComando(new Comando(ctx, "L", "assets/adele/adele_icons-01.svg", true));
     this.addComando(new Comando(ctx, "R", "assets/adele/adele_icons-02.svg", true));
     this.addComando(new Comando(ctx, "C", "assets/adele/adele_icons-06.svg", true));
