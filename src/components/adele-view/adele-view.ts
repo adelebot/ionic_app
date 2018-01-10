@@ -192,8 +192,6 @@ export class AdeleViewComponent {
     this.addComando(new Comando(ctx, "O", "assets/adele/adele_icons-05.svg", true));
     this.addComando(new Comando(ctx, "P", "assets/adele/adele_icons-08.svg", true));
     this.addComando(new Comando(ctx, "N", "assets/adele/adele_icons-07.svg", true));
-
-
   }
   /**
    * Funcion para posicionar un comando de forma ordenada
@@ -218,11 +216,11 @@ export class AdeleViewComponent {
       ctx.clearRect(0, 0, this.adeleCanvas.nativeElement.width, this.adeleCanvas.nativeElement.height);
       let width = this.adeleCanvas.nativeElement.width;
       let space = width * 0.025;// 2.5% del ancho para espacio entre comados.
-      let tamanio = width ;// 6.5% del ancho para el tamanio de los comandos 
+      let tamanio = width*PROPORCION_TAMANIO ;// 6.5% del ancho para el tamanio de los comandos 
       ctx.fillStyle = COLOR_STROKE;
       ctx.beginPath();
       ctx.moveTo(0, tamanio+space);
-      ctx.lineTo(width*2,tamanio+space);
+      ctx.lineTo(width,tamanio+space);
       ctx.stroke();
       this.logo.dibujar();
 
