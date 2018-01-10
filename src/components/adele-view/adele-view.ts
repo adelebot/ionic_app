@@ -165,7 +165,7 @@ export class AdeleViewComponent {
 
     //Botones de funcionamiento
     this.logo = new Comando(ctx, "config", "assets/adele/logo.svg", true);
-    this.logo.setPosicion([tamanio*2 , height - (tamanio+space)]);
+    this.logo.setPosicion([tamanio*2 , height - (tamanio)]);
     this.logo.setTamanio([10000,tamanio]);
 
     this.play = new Comando(ctx, "play", "assets/adele/adele_icons-09.svg", true);
@@ -174,7 +174,7 @@ export class AdeleViewComponent {
 
     this.erase = new Comando(ctx, "erase", "assets/adele/adele_icons-10.svg", true);
     this.erase.setTamanio([tamanio*1.2, tamanio*1.2]);
-    this.erase.setPosicion([width - (tamanio), height - (tamanio+space)]);
+    this.erase.setPosicion([width - (tamanio), height - (tamanio)]);
     
     ctx.strokeStyle = COLOR_STROKE;
     ctx.beginPath();
