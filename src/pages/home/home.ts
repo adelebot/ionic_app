@@ -15,7 +15,9 @@ export class HomePage {
     public navCtrl: NavController,
     private comunicacion: ComunicacionProvider
   ) {
-    this.comunicacion.enable().then(()=>{}).catch(()=>{});
+    if(!this.comunicacion.isEnable){
+      this.comunicacion.enable().then(()=>{}).catch(()=>{});
+    }
   }
 
   public onPlay(data:Array<string>):void{
