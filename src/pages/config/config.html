@@ -24,4 +24,12 @@
   <ion-fab right bottom>
       <button ion-fab color="primary" (click)="regresar()"><ion-icon name="arrow-back"></ion-icon></button>
   </ion-fab>
+  <ion-fab right top>
+      <button 
+          ion-button round color="danger"
+          [hidden]="!comunicacion.isConnected" 
+          (click)="desconectar()">
+            <ion-icon name="close-circle"></ion-icon>
+        </button>
+  </ion-fab>
 </ion-content>
