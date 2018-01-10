@@ -56,7 +56,7 @@ export class AdeleViewComponent {
         this.adeleCanvas.nativeElement.width = width;
         this.adeleCanvas.nativeElement.height = height;
 
-        this.aPos = width * 0.1;
+        this.aPos = width * 0.05;
         this.comandos=[];
         this.initComandos(ctx);
 
@@ -165,22 +165,22 @@ export class AdeleViewComponent {
 
     //Botones de funcionamiento
     this.logo = new Comando(ctx, "config", "assets/adele/adeleLogo.png", true);
-    this.logo.setPosicion([tamanio + 50, height - (tamanio+10)]);
+    this.logo.setPosicion([tamanio+30 , height - (tamanio)]);
 
     this.play = new Comando(ctx, "play", "assets/adele/adele_icons-09.svg", true);
     this.play.setTamanio([tamanio, tamanio]);
-    this.play.setPosicion([width - (tamanio + 10), tamanio+10]);
+    this.play.setPosicion([width - (tamanio + 10), tamanio/2]);
 
     this.erase = new Comando(ctx, "erase", "assets/adele/adele_icons-10.svg", true);
-    this.erase.setTamanio([tamanio, tamanio]);
-    this.erase.setPosicion([width - (tamanio + 5), height - (tamanio+10)]);
+    this.erase.setTamanio([tamanio*1.5, tamanio*1.5]);
+    this.erase.setPosicion([width - (tamanio + 5), height - tamanio]);
     
     ctx.fillStyle = "black";
     ctx.beginPath();
-    ctx.moveTo(0, tamanio+space*2.5);
-    ctx.lineTo(width,tamanio+space*2.5);
+    ctx.moveTo(0, tamanio+space);
+    ctx.lineTo(width,tamanio+space);
     ctx.stroke();
-    this.aPos = width * 0.1;
+    this.aPos = width * 0.05;
 
     //Comandos de adele
     this.addComando(new Comando(ctx, "U", "assets/adele/adele_icons-04.svg", true));
@@ -204,7 +204,7 @@ export class AdeleViewComponent {
     let tamanio = width * PROPORCION_TAMANIO;// 6.5% del ancho para el tamanio de los comandos
 
     c.setTamanio([tamanio, tamanio]);
-    c.setPosicion([this.aPos, tamanio+10]);
+    c.setPosicion([this.aPos, tamanio/2]);
     this.comandos.push(c);
     this.aPos = this.aPos + tamanio + space;
   }
@@ -220,8 +220,8 @@ export class AdeleViewComponent {
       let tamanio = width * PROPORCION_TAMANIO;// 6.5% del ancho para el tamanio de los comandos
       ctx.fillStyle = "black";
       ctx.beginPath();
-      ctx.moveTo(0, tamanio+space*2.5);
-      ctx.lineTo(width*2,tamanio+space*2.5);
+      ctx.moveTo(0, tamanio+space);
+      ctx.lineTo(width*2,tamanio+space);
       ctx.stroke();
       this.logo.dibujar();
 
