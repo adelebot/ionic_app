@@ -13,6 +13,9 @@ export class ConfigPage {
     private comunicacion:ComunicacionProvider,
     private loadingCtrl: LoadingController
   ) {
+    if(!this.comunicacion.isEnable){
+      this.comunicacion.enable();
+    }
   }
 
   private buscar():void{
@@ -20,8 +23,6 @@ export class ConfigPage {
       content: 'Buscando nuevos dispositivos'
     });
     animacion.present();
-    
-    this.comunicacion.enable();
     this.comunicacion.find().then(()=>{
       animacion.dismiss();
     }).catch(()=>{
