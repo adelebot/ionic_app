@@ -164,16 +164,17 @@ export class AdeleViewComponent {
     let space = width * 0.025;// 2.5% del ancho para espacio entre comados.
 
     //Botones de funcionamiento
-    this.logo = new Comando(ctx, "config", "assets/adele/adeleLogo.png", true);
-    this.logo.setPosicion([tamanio+30 , height - (tamanio)]);
+    this.logo = new Comando(ctx, "config", "assets/adele/logo.svg", true);
+    this.logo.setPosicion([tamanio*2 , height - (tamanio+space)]);
+    this.logo.setTamanio([10000,tamanio]);
 
     this.play = new Comando(ctx, "play", "assets/adele/adele_icons-09.svg", true);
-    this.play.setTamanio([tamanio, tamanio]);
-    this.play.setPosicion([width - (tamanio + 10), tamanio/2]);
+    this.play.setTamanio([tamanio*1.2, tamanio*1.2]);
+    this.play.setPosicion([width - (tamanio), tamanio/1.5]);
 
     this.erase = new Comando(ctx, "erase", "assets/adele/adele_icons-10.svg", true);
-    this.erase.setTamanio([tamanio*1.5, tamanio*1.5]);
-    this.erase.setPosicion([width - (tamanio + 5), height - tamanio]);
+    this.erase.setTamanio([tamanio*1.2, tamanio*1.2]);
+    this.erase.setPosicion([width - (tamanio), height - (tamanio+space)]);
     
     ctx.fillStyle = "black";
     ctx.beginPath();

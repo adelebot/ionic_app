@@ -58,29 +58,35 @@ export class ComunicacionProvider {
     });
   }
 
-  public enable():void{
-    console.log("Activando");
-    this.bluetooth.enable().then(()=>{
-      this.zone.run(()=>{
-        this.isEnable = true;
-      });
-      this.findBonded();
-      this.bluetooth.isConnected().then((data)=>{
+  public enable():Promise<void>{
+    return new Promise<void>((success,reject)=>{
+      console.log("Activando");
+      this.bluetooth.enable().then(()=>{
         this.zone.run(()=>{
-          this.isConnected = true;
+          this.isEnable = true;
         });
-        this.subscribe();
+        this.findBonded();
+        this.bluetooth.isConnected().then((data)=>{
+          this.zone.run(()=>{
+            this.isConnected = true;
+          });
+          this.subscribe();
+          success();
+        }).catch((err)=>{
+          this.zone.run(()=>{
+            this.isConnected = false;
+          });
+          success();
+        });
       }).catch((err)=>{
         this.zone.run(()=>{
-          this.isConnected = false;
+          this.isEnable = false;
         });
+        reject();
+        console.error("No se puede activar el bluetooth,",err);
       });
-    }).catch((err)=>{
-      this.zone.run(()=>{
-        this.isEnable = false;
-      });
-      console.error("No se puede activar el bluetooth,",err);
     });
+
   }
 
   public findUnBonded():Promise<void>{

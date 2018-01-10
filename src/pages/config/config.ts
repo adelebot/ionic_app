@@ -13,21 +13,28 @@ export class ConfigPage {
     private comunicacion:ComunicacionProvider,
     private loadingCtrl: LoadingController
   ) {
-    if(!this.comunicacion.isEnable){
-      this.comunicacion.enable();
-    }
+    
   }
 
   private buscar():void{
     let animacion = this.loadingCtrl.create({
-      content: 'Buscando nuevos dispositivos'
+      content: 'Buscando'
     });
+
     animacion.present();
-    this.comunicacion.find().then(()=>{
-      animacion.dismiss();
-    }).catch(()=>{
-      animacion.dismiss();
-    })
+
+    if(!this.comunicacion.isEnable){
+      this.comunicacion.enable().then(()=>{
+        this.comunicacion.find().then(()=>{
+          animacion.dismiss();
+        }).catch(()=>{
+          animacion.dismiss();
+        });
+      }).catch(()=>{
+        animacion.dismiss();
+      });;
+    }
+    
   }
 
   private regresar():void{
