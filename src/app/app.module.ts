@@ -7,16 +7,17 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Pro } from '@ionic/pro';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 import { AdeleViewComponent} from '../components/adele-view/adele-view';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ConfigPage } from '../pages/config/config';
-import { ComunicacionProvider } from '../providers/comunicacion/comunicacion'; 
+import { ComunicacionProvider } from '../providers/comunicacion/comunicacion';
 
 const IonicPro = Pro.init('e349b7cb', {
-  appVersion: "0.0.1"
+  appVersion: "0.0.2"
 });
 
 @Injectable()
@@ -27,7 +28,7 @@ export class MyErrorHandler implements ErrorHandler {
     try {
       this.ionicErrorHandler = injector.get(IonicErrorHandler);
     } catch(e) {
-      // Unable to get the IonicErrorHandler provider, ensure 
+      // Unable to get the IonicErrorHandler provider, ensure
       // IonicErrorHandler has been added to the providers list below
     }
   }
@@ -59,6 +60,7 @@ export class MyErrorHandler implements ErrorHandler {
     ConfigPage
   ],
   providers: [
+    AndroidPermissions,
     ScreenOrientation,
     StatusBar,
     SplashScreen,
