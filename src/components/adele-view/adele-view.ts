@@ -44,7 +44,7 @@ export class AdeleViewComponent {
   ) {
     this.comandos = new Array<Comando>();
     this.programa = new Array<Comando>();
-    console.info("Orientacion actual: ",this.screenOrientation.type); 
+    console.info("Orientacion actual: ",this.screenOrientation.type);
     this.screenOrientation.onChange().subscribe(ev=>{
       this.ngZone.run(() => {
         let ctx = this.adeleCanvas.nativeElement.getContext('2d');
@@ -71,7 +71,7 @@ export class AdeleViewComponent {
         }
         this.redibujar(ctx);
       });
-      
+
     });
   }
 
@@ -119,7 +119,7 @@ export class AdeleViewComponent {
       let x = ev.pointers[0].clientX;
       let y = ev.pointers[0].clientY;
       console.info("Iniciando drag: ", x, y);
-      // Si el arrastre comienza en los comandos clonar y 
+      // Si el arrastre comienza en los comandos clonar y
       // agregar a instrucciones de adele y seleciona el objeto
       for (let i = 0; i < this.comandos.length && c == null; ++i) {
         if (this.comandos[i].estaDentro([x, y])) {
@@ -160,7 +160,7 @@ export class AdeleViewComponent {
   private initComandos(ctx: CanvasRenderingContext2D): void {
     let width = this.adeleCanvas.nativeElement.width;
     let height = this.adeleCanvas.nativeElement.height;
-    let tamanio = width * PROPORCION_TAMANIO;// 5% de tamanio 
+    let tamanio = width * PROPORCION_TAMANIO;// 5% de tamanio
     let space = width * 0.025;// 2.5% del ancho para espacio entre comados.
 
     //Botones de funcionamiento
@@ -175,7 +175,7 @@ export class AdeleViewComponent {
     this.erase = new Comando(ctx, "erase", "assets/adele/adele_icons-10.svg", true);
     this.erase.setTamanio([tamanio*1.2, tamanio*1.2]);
     this.erase.setPosicion([width - (tamanio), height - (tamanio)]);
-    
+
     ctx.strokeStyle = COLOR_STROKE;
     ctx.beginPath();
     ctx.moveTo(0, tamanio+space);
@@ -184,14 +184,14 @@ export class AdeleViewComponent {
     this.aPos = width * 0.05;
 
     //Comandos de adele
-    this.addComando(new Comando(ctx, "F", "assets/adele/adele_icons-04.svg", true));
-    this.addComando(new Comando(ctx, "B", "assets/adele/adele_icons-03.svg", true));
-    this.addComando(new Comando(ctx, "L", "assets/adele/adele_icons-01.svg", true));
-    this.addComando(new Comando(ctx, "R", "assets/adele/adele_icons-02.svg", true));
-    this.addComando(new Comando(ctx, "C", "assets/adele/adele_icons-06.svg", true));
-    this.addComando(new Comando(ctx, "O", "assets/adele/adele_icons-05.svg", true));
-    this.addComando(new Comando(ctx, "P", "assets/adele/adele_icons-08.svg", true));
-    this.addComando(new Comando(ctx, "N", "assets/adele/adele_icons-07.svg", true));
+    this.addComando(new Comando(ctx, "F", "assets/adele/Forward.svg", true));
+    this.addComando(new Comando(ctx, "B", "assets/adele/Backward.svg", true));
+    this.addComando(new Comando(ctx, "L", "assets/adele/Left.svg", true));
+    this.addComando(new Comando(ctx, "R", "assets/adele/Right.svg", true));
+    this.addComando(new Comando(ctx, "C", "assets/adele/CloseClaw.svg", true));
+    this.addComando(new Comando(ctx, "O", "assets/adele/OpenClaw.svg", true));
+    this.addComando(new Comando(ctx, "P", "assets/adele/Colour.svg", true));
+    this.addComando(new Comando(ctx, "N", "assets/adele/Music.svg", true));
   }
   /**
    * Funcion para posicionar un comando de forma ordenada
@@ -216,7 +216,7 @@ export class AdeleViewComponent {
       ctx.clearRect(0, 0, this.adeleCanvas.nativeElement.width, this.adeleCanvas.nativeElement.height);
       let width = this.adeleCanvas.nativeElement.width;
       let space = width * 0.025;// 2.5% del ancho para espacio entre comados.
-      let tamanio = width*PROPORCION_TAMANIO ;// 6.5% del ancho para el tamanio de los comandos 
+      let tamanio = width*PROPORCION_TAMANIO ;// 6.5% del ancho para el tamanio de los comandos
       ctx.fillStyle = COLOR_STROKE;
       ctx.beginPath();
       ctx.moveTo(0, tamanio+space);
