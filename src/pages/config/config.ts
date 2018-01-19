@@ -13,7 +13,7 @@ export class ConfigPage {
     private comunicacion:ComunicacionProvider,
     private loadingCtrl: LoadingController
   ) {
-    
+
   }
 
   private buscar():void{
@@ -33,8 +33,14 @@ export class ConfigPage {
       }).catch(()=>{
         animacion.dismiss();
       });;
+    }else{
+      this.comunicacion.find().then(()=>{
+        animacion.dismiss();
+      }).catch(()=>{
+        animacion.dismiss();
+      });
     }
-    
+
   }
 
   private regresar():void{
@@ -47,7 +53,7 @@ export class ConfigPage {
     });
     animacion.present();
     this.comunicacion.connect(dispositivo).then(()=>{
-      this.navCtrl.pop();       
+      this.navCtrl.pop();
       animacion.dismiss();
     }).catch(()=>{
       animacion.dismiss();
