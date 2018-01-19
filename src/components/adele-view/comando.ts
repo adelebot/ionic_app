@@ -44,7 +44,7 @@ export class Comando{
             this.esDibujable = true;
             if(this.tamY===null){
                 this.tamX = this.imagen.width;
-                this.tamY = this.imagen.height; 
+                this.tamY = this.imagen.height;
             }else{
                 let px = this.imagen.width/this.tamX;
                 let py = this.imagen.height/this.tamY;
@@ -133,7 +133,7 @@ export class Comando{
             if(this.label!==null){
                 this.contexto.fillStyle = COLOR_STROKE;
                 this.contexto.font="25px serif";
-                this.contexto.fillText(this.label,this.posX-(this.tamX/1.),this.posY-(this.tamY/3));
+                this.contexto.fillText(this.label,this.posX-(this.tamX/1.7),this.posY);
             }
         }
     }
@@ -145,9 +145,9 @@ export class Comando{
     public estaDentro(coordenadas:[number,number]):boolean{
         let esta:boolean = false;
         if(
-            coordenadas[0] >= (this.posX-(this.tamX/1.75)) && 
-            coordenadas[0]<= (this.posX+(this.tamX/1.75)) && 
-            coordenadas[1] >= this.posY-(this.tamY/1.75) && 
+            coordenadas[0] >= (this.posX-(this.tamX/1.75)) &&
+            coordenadas[0]<= (this.posX+(this.tamX/1.75)) &&
+            coordenadas[1] >= this.posY-(this.tamY/1.75) &&
             coordenadas[1] <= (this.posY+(this.tamY/1.75)))
             {
                 esta = true;
