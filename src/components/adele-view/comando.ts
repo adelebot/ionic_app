@@ -133,7 +133,7 @@ export class Comando{
             if(this.label!==null){
                 this.contexto.fillStyle = COLOR_STROKE;
                 this.contexto.font="25px serif";
-                this.contexto.fillText(this.label,this.posX-(this.tamX/1.7),this.posY);
+                this.contexto.fillText(this.label,this.posX-(this.tamX/1.5),this.posY);
             }
         }
     }
