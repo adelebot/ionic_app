@@ -168,11 +168,11 @@ export class AdeleViewComponent {
     this.logo.setPosicion([tamanio*2 , height - (tamanio)]);
     this.logo.setTamanio([10000,tamanio]);
 
-    this.play = new Comando(ctx, "play", "assets/adele/adele_icons-09.svg", true);
+    this.play = new Comando(ctx, "play", "assets/adele/Play.svg", true);
     this.play.setTamanio([tamanio*1.2, tamanio*1.2]);
     this.play.setPosicion([width - (tamanio), tamanio/1.5]);
 
-    this.erase = new Comando(ctx, "erase", "assets/adele/adele_icons-10.svg", true);
+    this.erase = new Comando(ctx, "erase", "assets/adele/Errase.svg", true);
     this.erase.setTamanio([tamanio*1.2, tamanio*1.2]);
     this.erase.setPosicion([width - (tamanio), height - (tamanio)]);
 
